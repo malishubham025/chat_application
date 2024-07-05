@@ -7,18 +7,48 @@
 </head>
 <body>
     <h1>Chat Application</h1>
-    <input type="text" id="text">
+    <p class="socket-id"></p>
+    <input type="text" id="text" placeholder="text">
+    <input type="text" id="to" placeholder="to">
     <button id="btn">click</button>
+    <p></p>
+    <input type="text" id="join" placeholder="join room">
+    <button id="btnjoin">Join</button>
+    <div class="meaages"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io();
-        document.querySelector("#btn").addEventListener("click",()=>{
-            const val=document.querySelector("#text").value;
-            socket.emit("message",val);
-            socket.on("message",(m)=>{
-                console.log(m);
-            })
-        })
+       const socket=io();
+       socket.on("socketid",(socketid)=>{
+           
+            document.querySelector(".socket-id").innerHTML=socketid;
+       })
+       document.querySelector("#btn").addEventListener("click",()=>{
+            const value=document.querySelector("#text").value;
+            const to=document.querySelector("#to").value;
+            
+            if(to){
+                
+                const id=socket.id;
+                socket.emit("messageto",{id,value,to});
+                document.querySelector("#text").value="";
+                document.querySelector("#to").value="";
+            }
+            else{
+                document.querySelector("#text").value="";
+                console.log(value);
+                socket.emit("message",value);
+            }
+       })
+       socket.on("receivedMessage",(message)=>{
+            console.log(message);
+            const node=document.createElement("p");
+            node.textContent=message;
+            document.querySelector(".meaages").appendChild(node);
+       })
+       document.querySelector("#btnjoin").addEventListener("click",()=>{
+            const val=document.querySelector("#join").value;
+            socket.emit("joinroom",val);
+       })
     </script>
 </body>
 </html>
