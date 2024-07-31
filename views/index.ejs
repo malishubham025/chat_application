@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -50,5 +50,22 @@
             socket.emit("joinroom",val);
        })
     </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" placeholder="join" class="room">
+    <button onclick="joinroom()" >Join Room</button>
+    <video class="local" autoplay="true"></video>
+    <video class="remote" autoplay="true"></video>
+    <button onclick="createRoom()">Create Room</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/client.js"></script>
 </body>
 </html>
