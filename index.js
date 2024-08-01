@@ -123,16 +123,19 @@ io.on("connection",(socket)=>{
         console.log(`Socket ${socket.id} created  room ${room}`);
     });
     socket.on("ready",function(roomname){
-        socket.broadcast.to(roomname).emit("ready");
+        console.log("hello",roomname);
+        io.to(roomname).emit("ready");
     })
     socket.on("candidate",function(data){
-        socket.broadcast.to(data.roomname).emit("candidate",data.candidate);
+        io.to(data.roomname).emit("candidate",data.candidate);
     })
     socket.on("offer",function(data){
-        socket.broadcast.to(data.roomname).emit("offer",data.offer);
+        console.log("hi");
+        console.log(data.offer);
+        io.to(data.roomname).emit("offer",data.offer);
     })
     socket.on("answer",function(data){
-        socket.broadcast.to(data.roomname).emit("answer",data.answer);
+        io.to(data.roomname).emit("answer",data.answer);
     })
 
 })
